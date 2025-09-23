@@ -1,106 +1,53 @@
-CONSTANT_SEGMENT = [
-    '@:n',
-    'D=A',
-]
 
-PUSH_COMMAND = [
-    '@SP',
-    'A=M',
-    'M=D',
-    '@SP',
-    'M=M+1',
-]
-
-# result = x + y
+#arithmetic and logic command
 ADD_COMMAND = [
     '@SP',
     'M=M-1',
+    'A=M',
+    'D=M',
+    'A=A-1',
+    'D=D+M',
+    'M=D'
+]
+
+SUB_COMMAND = [
+    '@SP',
     'M=M-1',
     'A=M',
     'D=M',
-    '@SP',
-    'M=M+1',
-    'A=M',
-    'D=D+M',
-    '@SP',
-    'M=M-1',
-    'A=M',
+    'A=A-1',
+    'D=M-D',
     'M=D',
-    '@SP',
-    'M=M+1'
 ]
+
+NEG_COMMAND = [
+    '@SP',
+    'A=M-1',
+    'M=-M',
+]
+
+#stack
+
 
 EQ_COMMAND = [
     '@SP',
     'M=M-1',
     'A=M',
     'D=M',
-
-    '@SP',
-    'M=M-1',
-    'A=M',
-    'D=D-M',
-
-    '@IF_ZERO_:i',
+    'A=A-1',
+    'D=M-D',
+    '@EQ_:i',
     'D;JEQ',
-    
-    '@ELSE_:i',
-    '0;JMP',
-
-    '(IF_ZERO_:i)',
     '@SP',
-    'A=M',
-    'M=-1',
-    '@END_IF_:i',
-    '0;JMP',
-
-    '(ELSE_:i)',
-    '@SP',
-    'A=M',
+    'A=M-1',
     'M=0',
-    '@END_IF_:i',
+    '@END_:i',
     '0;JMP',
-
-    '(END_IF_:i)',
+    '(EQ_:i)',
     '@SP',
-    'M=M+1'
-]
-
-# if (x < y) then true else false
-LT_COMMAND = [
-    '@SP',
-    'M=M-1',
-    'A=M',
-    'D=M',
-
-    '@SP',
-    'M=M-1',
-    'A=M',
-    'D=D-M',
-
-    '@IF_LESS_THAN_:i',
-    'D;JGT',
-    
-    '@ELSE_:i',
-    '0;JMP',
-
-    '(IF_LESS_THAN_:i)',
-    '@SP',
-    'A=M',
+    'A=M-1',
     'M=-1',
-    '@END_IF_:i',
-    '0;JMP',
-
-    '(ELSE_:i)',
-    '@SP',
-    'A=M',
-    'M=0',
-    '@END_IF_:i',
-    '0;JMP',
-
-    '(END_IF_:i)',
-    '@SP',
-    'M=M+1'
+    '(END_:i)',
 ]
 
 # if (x > y) then true else false
@@ -109,129 +56,72 @@ GT_COMMAND = [
     'M=M-1',
     'A=M',
     'D=M',
-
+    'A=A-1',
+    'D=M-D',
+    '@GT_:i',
+    'D;JGT',
     '@SP',
-    'M=M-1',
-    'A=M',
-    'D=D-M',
-
-    '@IF_GREATE_THAN_:i',
-    'D;JLT',
-    
-    '@ELSE_:i',
-    '0;JMP',
-
-    '(IF_GREATE_THAN_:i)',
-    '@SP',
-    'A=M',
-    'M=-1',
-    '@END_IF_:i',
-    '0;JMP',
-
-    '(ELSE_:i)',
-    '@SP',
-    'A=M',
+    'A=M-1',
     'M=0',
-    '@END_IF_:i',
+    '@END_:i',
     '0;JMP',
-
-    '(END_IF_:i)',
+    '(GT_:i)',
     '@SP',
-    'M=M+1'
+    'A=M-1',
+    'M=-1',
+    '(END_:i)',
 ]
 
-
-SUB_COMMAND = [
-    '@SP',
-    'M=M-1',
-    'M=M-1',
-    'A=M',
-    'D=M',
-
-    '@SP',
-    'M=M+1',
-    'A=M',
-    'D=D-M',
-
-    '@SP',
-    'M=M-1',
-    'A=M',
-    'M=D',
-
-    '@SP',
-    'M=M+1',
-]
-
-NEG_COMMAND = [
+# if (x < y) then true else false
+LT_COMMAND = [
     '@SP',
     'M=M-1',
     'A=M',
     'D=M',
-
-    'M=-D',
-
+    'A=A-1',
+    'D=M-D',
+    '@LT_:i',
+    'D;JLT',
     '@SP',
-    'M=M+1',
+    'A=M-1',
+    'M=0',
+    '@END_:i',
+    '0;JMP',
+    '(LT_:i)',
+    '@SP',
+    'A=M-1',
+    'M=-1',
+    '(END_:i)',
 ]
 
 
 AND_COMMAND = [
     '@SP',
     'M=M-1',
-    'M=M-1',
     'A=M',
     'D=M',
-
-    '@SP',
-    'M=M+1',
-    'A=M',
-    'D=D&M',
-
-    '@SP',
-    'M=M-1',
-    'A=M',
-    'M=D',
-
-    '@SP',
-    'M=M+1',
+    'A=A-1',
+    'M=D&M',
 ]
 
 OR_COMMAND = [
     '@SP',
     'M=M-1',
-    'M=M-1',
     'A=M',
     'D=M',
-
-    '@SP',
-    'M=M+1',
-    'A=M',
-    'D=D|M',
-
-    '@SP',
-    'M=M-1',
-    'A=M',
-    'M=D',
-
-    '@SP',
-    'M=M+1',
+    'A=A-1',
+    'M=D|M',
 ]
 
 
 NOT_COMMAND = [
     '@SP',
-    'M=M-1',
-    'A=M',
-    'D=M',
-
-    'M=!D',
-
-    '@SP',
-    'M=M+1',
+    'A=M-1',
+    'M=!M',
 ]
 
 
-# pop 
+# pop command
 
 POP_LOCAL_COMMAND = [
     '@:n',
@@ -375,26 +265,115 @@ POP_POINTER_COMMAND = [
 ]
 
 
-# push
 
-PUSH_LOCAL_COMMAND = [
+
+# push command
+PUSH_CONSTANT_COMMAND = [
     '@:n',
     'D=A',
-
-    '@R13',
-    'M=D',
-
-    '@LCL',
-    'D=M',
-
-    '@R13',
-    'M=D+M',
-
-    '@R13',
+    '@SP',
     'A=M',
-    'D=M',
-
-    '',
+    'M=D',
+    '@SP',
+    'M=M+1',
 ]
 
 
+PUSH_LOCAL_COMMAND = [
+    '@LCL',
+    'D=M',
+    '@:n',
+    'D=D+A',
+    'A=D',
+    'D=M',
+    '@SP',
+    'A=M',
+    'M=D',
+    '@SP',
+    'M=M+1',
+]
+
+PUSH_ARGUMENT_COMMAND = [
+    '@ARG',
+    'D=M',
+    '@:n',
+    'D=D+A',
+    'A=D',
+    'D=M',
+    '@SP',
+    'A=M',
+    'M=D',
+    '@SP',
+    'M=M+1',
+]
+
+PUSH_THIS_COMMAND = [
+    '@THIS',
+    'D=M',
+    '@:n',
+    'D=D+A',
+    'A=D',
+    'D=M',
+    '@SP',
+    'A=M',
+    'M=D',
+    '@SP',
+    'M=M+1',
+]
+
+
+PUSH_THAT_COMMAND = [
+    '@THAT',
+    'D=M',
+    '@:n',
+    'D=D+A',
+    'A=D',
+    'D=M',
+    '@SP',
+    'A=M',
+    'M=D',
+    '@SP',
+    'M=M+1',
+]
+
+
+
+PUSH_POINTER_COMMAND = [
+    '@3',
+    'D=A',
+    '@:n',
+    'D=D+A',
+    'A=D',
+    'D=M',
+    '@SP',
+    'A=M',
+    'M=D',
+    '@SP',
+    'M=M+1',
+]
+
+
+PUSH_TEMP_COMMAND = [
+    '@5',
+    'D=A',
+    '@:n',
+    'D=D+A',
+    'A=D',
+    'D=M',
+    '@SP',
+    'A=M',
+    'M=D',
+    '@SP',
+    'M=M+1',
+]
+
+
+PUSH_STATIC_COMMAND = [
+    '@:n',
+    'D=M',
+    '@SP',
+    'A=M',
+    'M=D',
+    '@SP',
+    'M=M+1',
+]
