@@ -1,6 +1,4 @@
-from my.my_asm_codes import (
-    PUSH_COMMAND,
-    CONSTANT_SEGMENT,
+from my_asm_codes import (
     ADD_COMMAND,
     EQ_COMMAND,
     LT_COMMAND,
@@ -23,7 +21,8 @@ from my.my_asm_codes import (
     PUSH_STATIC_COMMAND,
     PUSH_ARGUMENT_COMMAND,
     PUSH_THIS_COMMAND,
-    PUSH_THAT_COMMAND
+    PUSH_THAT_COMMAND,
+    PUSH_CONSTANT_COMMAND
 )
 
 #vm_code arrays
@@ -35,7 +34,7 @@ asm_code = []
 index = 0
 
 def get_vm_code_from_file():
-    f = open("./code.vm")
+    f = open("./file_code.vm")
     for line in f:
         vm_code.append(line.replace("\n", ""))
     f.close()
@@ -56,11 +55,13 @@ def copy_code(asm_commands, value):
         else:
             asm_code.append(line)
 
+
 def create_asm_file():
     f = open("./asm_code.asm", "+w")
     for line in asm_code:
         f.write(line + "\n")
     f.close()
+
 
 def analysis_and_generate_code():
     global index
@@ -68,10 +69,8 @@ def analysis_and_generate_code():
     for vm_command in vm_code_keys:
         if len(vm_command) == 3:
             if vm_command[0] == 'push':
-                # push constant n
                 if vm_command[1] == 'constant':
-                    copy_code(CONSTANT_SEGMENT, vm_command[2])
-                    copy_code(PUSH_COMMAND, None)
+                    copy_code(PUSH_CONSTANT_COMMAND, vm_command[2])
                 if vm_command[1] == 'local':
                     copy_code(PUSH_LOCAL_COMMAND, vm_command[2])
                 if vm_command[1] == 'argument':
@@ -109,28 +108,29 @@ def analysis_and_generate_code():
                 copy_code(ADD_COMMAND, None)
             if vm_command[0] == 'eq':
                 copy_code(EQ_COMMAND, None)
-                index+=1
+                # index+=1
             if vm_command[0] == 'lt':
                 copy_code(LT_COMMAND, None)
-                index+=1
+                # index+=1
             if vm_command[0] == 'gt':
                 copy_code(GT_COMMAND, None)
-                index+=1
+                # index+=1
             if vm_command[0] == 'sub':
                 copy_code(SUB_COMMAND, None)
-                index+=1
+                # index+=1
             if vm_command[0] == 'neg':
                 copy_code(NEG_COMMAND, None)
-                index+=1
+                # index+=1
             if vm_command[0] == 'and':
                 copy_code(AND_COMMAND, None)
-                index+=1
+                # index+=1
             if vm_command[0] == 'or':
                 copy_code(OR_COMMAND, None)
-                index+=1
+                # index+=1
             if vm_command[0] == 'not':
                 copy_code(NOT_COMMAND, None)
-                index+=1
+                # index+=1
+    index += 1
 
 
 def main():

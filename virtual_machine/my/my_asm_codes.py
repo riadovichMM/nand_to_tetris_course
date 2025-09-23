@@ -124,122 +124,87 @@ NOT_COMMAND = [
 # pop command
 
 POP_LOCAL_COMMAND = [
-    '@:n',
-    'D=A',
-    '@R13',
-    'M=D',
-
     '@LCL',
     'D=M',
-    '@R13',
-    'M=D+M',
-
+    '@:n',
+    'D=D+A',
+    '@addr_:i',
+    'M=D',
     '@SP',
     'M=M-1',
     'A=M',
     'D=M',
-
-    '@R13',
+    '@addr_:i',
     'A=M',
-    'M=D',
-    '@R13',
-    'M=0',
+    'M=D'
 ]
 
 
 POP_ARGUMENT_COMMAND = [
-    '@:n',
-    'D=A',
-    '@R13',
-    'M=D',
-
     '@ARG',
     'D=M',
-    '@R13',
-    'M=D+M',
-
+    '@:n',
+    'D=D+A',
+    '@addr_:i',
+    'M=D',
     '@SP',
     'M=M-1',
     'A=M',
     'D=M',
-
-    '@R13',
+    '@addr_:i',
     'A=M',
-    'M=D',
-    '@R13',
-    'M=0',
+    'M=D'
 ]
 
 
 
 POP_THIS_COMMAND = [
-    '@:n',
-    'D=A',
-    '@R13',
-    'M=D',
-
     '@THIS',
     'D=M',
-    '@R13',
-    'M=D+M',
-
+    '@:n',
+    'D=D+A',
+    '@addr_:i',
+    'M=D',
     '@SP',
     'M=M-1',
     'A=M',
     'D=M',
-
-    '@R13',
+    '@addr_:i',
     'A=M',
-    'M=D',
-    '@R13',
-    'M=0',
+    'M=D'
 ]
 
 
 POP_THAT_COMMAND = [
-    '@:n',
-    'D=A',
-    '@R13',
-    'M=D',
-
     '@THAT',
     'D=M',
-    '@R13',
-    'M=D+M',
-
+    '@:n',
+    'D=D+A',
+    '@addr_:i',
+    'M=D',
     '@SP',
     'M=M-1',
     'A=M',
     'D=M',
-
-    '@R13',
+    '@addr_:i',
     'A=M',
-    'M=D',
-    '@R13',
-    'M=0',
+    'M=D'
 ]
 
 POP_TEMP_COMMAND = [
-    '@:n',
-    'D=A',
-    '@R13',
-    'M=D',
-
     '@5',
     'D=A',
-    '@R13',
-    'M=D+M',
-
+    '@:n',
+    'D=D+A',
+    '@addr_:i',
+    'M=D',
     '@SP',
     'M=M-1',
     'A=M',
     'D=M',
-
-    '@R13',
+    '@addr_:i',
     'A=M',
-    'M=D',
-    '@R13',
-    'M=0',
+    'M=D'
 ]
 
 
@@ -248,20 +213,25 @@ POP_STATIC_COMMAND = [
     'M=M-1',
     'A=M',
     'D=M',
-
     '@:n',
     'M=D'
 ]
 
 
 POP_POINTER_COMMAND = [
+    '@3',
+    'D=A',
+    '@n',
+    'D=D+A',
+    '@addr_:i',
+    'M=D',
     '@SP',
     'M=M-1',
     'A=M',
     'D=M',
-
-    '@:n',
-    'M=D',
+    '@addr_:i',
+    'A=M',
+    'M=D'
 ]
 
 
