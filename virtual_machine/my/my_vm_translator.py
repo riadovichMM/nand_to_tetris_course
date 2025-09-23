@@ -1,4 +1,4 @@
-from deprecated__asm_codes import (
+from my.my_asm_codes import (
     PUSH_COMMAND,
     CONSTANT_SEGMENT,
     ADD_COMMAND,
